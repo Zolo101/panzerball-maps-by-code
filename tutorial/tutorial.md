@@ -46,16 +46,19 @@ Next, lets add the seed constant, this gives us completely different noise based
 ```js
 const seed = 0;
 ```
-This will give the noise function we need to generate the 3D noise.
-
-Noisezoom zooms into the noise, basically. Here is a better explanation. 15 is a good number for noisezoom, too little makes tiny blobs, too much makes detailed, but uninteresting terrain.
-
-![noisezoom](zoomhelp.png)
+Next is this:
 
 ```js
 const noisemaker = noise.makeNoise3D(seed);
 const noisezoom = 15;
 ```
+
+Noisemaker will give the noise function we need to generate the 3D noise.
+
+Noisezoom zooms into the noise, basically. Here is a better explanation. 15 is a good number for noisezoom, too little makes tiny blobs, too much makes detailed, but uninteresting terrain.
+
+![noisezoom](zoomhelp.png)
+
 We'll also need these variables, which will be explained later.
 
 ```js
@@ -63,7 +66,7 @@ let id = 1;
 const blocksize = 400;
 ```
 
-This is how big the generated noise should be.
+These constants below tells us how big the generated noise will be.
 `48x48x48` is playable, I consider `64x64x64` the max depending on the density.
 
 ```js
@@ -75,8 +78,8 @@ const znoise = 48;
 These control when the blocks should be created, you'll find out what these do later on.
 
 ```js
-const gdensity = .3;
-const ldensity = .4;
+const gdensity = 0.3;
+const ldensity = 0.4;
 ```
 
 ## 3. Structure
@@ -111,7 +114,7 @@ let map = {
 }
 ```
 
-This function will create the block object, and put in in the `map.items`
+The function below will create the block object, and place it inside of `map.items`.
 
 This will also give the object a unique id.
 
@@ -129,7 +132,7 @@ function cloneBlock(name,x,y,z,pitch,yaw,roll,mutation,modifier) {
     block.roll = roll;
     block.mutation = mutation;
     blockclone.modifier = modifier;
-    newjson.items.push(block);
+    map.items.push(block);
 }
 ```
 
@@ -189,7 +192,7 @@ Now we will finally output the map to a json file, where we can now play it!
 jsonfile.writeFile('result.ballmap', newjson)
 ```
 
-Optimally, we can also log the amount of blocks that were created. 
+Optimally, we can also log the amount of blocks that were created:
 
 ```js
 console.log("Completed!\nBlocks created:",id)
@@ -212,7 +215,7 @@ And there we have it! If all goes well, you should get a map similar to this:
 
 ## 7. Closing notes
 
-Obviously this isnt the most optimial way, for example, merging smaller cubes into a single big cube would help a lot with framerate.
+Obviously this isnt the most optimal way, for example, merging smaller cubes into a single big cube would help a lot with framerate.
 
 If you are getting errors in this tutorial don't be afraid to send an github issue or contact me, at Zelo101#0138. Have fun!
 
